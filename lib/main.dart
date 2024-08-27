@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'config/firebase_options.dart';
+import 'package:staff_performance_mapping_tool/firebase_options.dart';
 import 'services/auth_service.dart';
 import 'screens/user/user_home_screen.dart';
 import 'screens/admin/admin_dashboard_screen.dart';
