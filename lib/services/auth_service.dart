@@ -18,7 +18,6 @@ class AuthService extends ChangeNotifier {
       notifyListeners();
       return result;
     } catch (e) {
-      print(e.toString());
       rethrow;
     }
   }
@@ -36,7 +35,6 @@ class AuthService extends ChangeNotifier {
       notifyListeners();
       return result;
     } catch (e) {
-      print(e.toString());
       rethrow;
     }
   }
@@ -46,7 +44,6 @@ class AuthService extends ChangeNotifier {
       await _auth.signOut();
       notifyListeners();
     } catch (e) {
-      print(e.toString());
       rethrow;
     }
   }
@@ -57,7 +54,6 @@ class AuthService extends ChangeNotifier {
           await _firestore.collection('users').doc(uid).get();
       return doc['role'];
     } catch (e) {
-      print(e.toString());
       return 'user';
     }
   }

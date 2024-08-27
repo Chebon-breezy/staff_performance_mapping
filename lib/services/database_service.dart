@@ -9,7 +9,6 @@ class DatabaseService {
     try {
       await _firestore.collection('work_reports').add(report.toMap());
     } catch (e) {
-      print(e.toString());
       rethrow;
     }
   }
@@ -38,7 +37,6 @@ class DatabaseService {
           .doc(userId)
           .update({'role': newRole});
     } catch (e) {
-      print(e.toString());
       rethrow;
     }
   }

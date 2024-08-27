@@ -8,16 +8,18 @@ import 'user_details_screen.dart';
 class AdminDashboardScreen extends StatelessWidget {
   final DatabaseService _databaseService = DatabaseService();
 
+  AdminDashboardScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin Dashboard'),
+        title: const Text('Admin Dashboard'),
         actions: [
           IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
             onPressed: () => authService.signOut(),
           ),
         ],
@@ -26,10 +28,10 @@ class AdminDashboardScreen extends StatelessWidget {
         stream: _databaseService.getAllUsers(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No users found.'));
+            return const Center(child: Text('No users found.'));
           }
           return ListView.builder(
             itemCount: snapshot.data!.length,

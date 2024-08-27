@@ -6,6 +6,8 @@ import '../../models/work_report_model.dart';
 import 'submit_report_screen.dart';
 
 class UserHomeScreen extends StatelessWidget {
+  const UserHomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -13,10 +15,10 @@ class UserHomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Home'),
+        title: const Text('User Home'),
         actions: [
           IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
             onPressed: () => authService.signOut(),
           ),
         ],
@@ -25,10 +27,10 @@ class UserHomeScreen extends StatelessWidget {
         stream: databaseService.getWorkReports(authService.currentUser!.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No work reports submitted yet.'));
+            return const Center(child: Text('No work reports submitted yet.'));
           }
           return ListView.builder(
             itemCount: snapshot.data!.length,
@@ -44,11 +46,11 @@ class UserHomeScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SubmitReportScreen()),
+            MaterialPageRoute(builder: (context) => const SubmitReportScreen()),
           );
         },
       ),

@@ -6,6 +6,8 @@ import '../../services/location_service.dart';
 import '../../models/work_report_model.dart';
 
 class SubmitReportScreen extends StatefulWidget {
+  const SubmitReportScreen({Key? key}) : super(key: key);
+
   @override
   _SubmitReportScreenState createState() => _SubmitReportScreenState();
 }
@@ -42,22 +44,23 @@ class _SubmitReportScreenState extends State<SubmitReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Submit Work Report')),
+      appBar: AppBar(title: const Text('Submit Work Report')),
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Task Description'),
+                decoration:
+                    const InputDecoration(labelText: 'Task Description'),
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter a task description' : null,
                 onSaved: (value) => _taskDescription = value!,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
-                child: Text('Submit Report'),
+                child: const Text('Submit Report'),
                 onPressed: _submitReport,
               ),
             ],

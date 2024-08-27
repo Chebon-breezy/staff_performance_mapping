@@ -7,7 +7,7 @@ class UserDetailsScreen extends StatelessWidget {
   final UserModel user;
   final DatabaseService _databaseService = DatabaseService();
 
-  UserDetailsScreen({required this.user});
+  UserDetailsScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +18,16 @@ class UserDetailsScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Name: ${user.name}'),
                 Text('Email: ${user.email}'),
                 Text('Role: ${user.role}'),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
-                  child: Text('Change Role'),
+                  child: const Text('Change Role'),
                   onPressed: () => _showChangeRoleDialog(context),
                 ),
               ],
@@ -38,10 +38,10 @@ class UserDetailsScreen extends StatelessWidget {
               stream: _databaseService.getWorkReports(user.id),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
                 if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(
+                  return const Center(
                       child: Text('No work reports found for this user.'));
                 }
                 return ListView.builder(
@@ -69,7 +69,7 @@ class UserDetailsScreen extends StatelessWidget {
       builder: (BuildContext context) {
         String newRole = user.role;
         return AlertDialog(
-          title: Text('Change User Role'),
+          title: const Text('Change User Role'),
           content: DropdownButton<String>(
             value: newRole,
             items: ['user', 'admin'].map((String value) {
@@ -86,11 +86,11 @@ class UserDetailsScreen extends StatelessWidget {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
-              child: Text('Save'),
+              child: const Text('Save'),
               onPressed: () async {
                 await _databaseService.updateUserRole(user.id, newRole);
                 Navigator.of(context).pop();

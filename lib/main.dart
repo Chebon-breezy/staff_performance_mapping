@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'config/firebase_options.dart';
 import 'services/auth_service.dart';
@@ -13,10 +14,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -29,13 +32,15 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: AuthWrapper(),
+        home: const AuthWrapper(),
       ),
     );
   }
 }
 
 class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -45,7 +50,7 @@ class AuthWrapper extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           final User? user = snapshot.data;
           if (user == null) {
-            return LoginScreen();
+            return const LoginScreen();
           }
           return FutureBuilder<String>(
             future: authService.getUserRole(user.uid),
@@ -57,17 +62,19 @@ class AuthWrapper extends StatelessWidget {
                   return UserHomeScreen();
                 }
               }
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             },
           );
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
 }
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -85,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _login() async {
+  Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
@@ -97,13 +104,17 @@ class _LoginScreenState extends State<LoginScreen> {
           _passwordController.text.trim(),
         );
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to sign in: ${e.toString()}')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to sign in: ${e.toString()}')),
+          );
+        }
       } finally {
-        setState(() {
-          _isLoading = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
     }
   }
@@ -112,11 +123,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -125,10 +136,10 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Text(
                   'Staff Performance Mapping Tool',
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 48.0),
+                const SizedBox(height: 48.0),
                 CustomTextField(
                   labelText: 'Email',
                   controller: _emailController,
@@ -140,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 CustomTextField(
                   labelText: 'Password',
                   controller: _passwordController,
@@ -152,9 +163,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 24.0),
+                const SizedBox(height: 24.0),
                 _isLoading
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : CustomButton(
                         text: 'Login',
                         onPressed: _login,

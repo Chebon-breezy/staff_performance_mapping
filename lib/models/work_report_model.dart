@@ -21,7 +21,7 @@ class WorkReportModel {
       userId: data['userId'] ?? '',
       taskDescription: data['taskDescription'] ?? '',
       timestamp: (data['timestamp'] as Timestamp).toDate(),
-      location: data['location'] ?? GeoPoint(0, 0),
+      location: data['location'] ?? const GeoPoint(0, 0),
     );
   }
 
