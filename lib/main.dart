@@ -6,6 +6,7 @@ import 'package:staff_performance_mapping_tool/firebase_options.dart';
 import 'services/auth_service.dart';
 import 'screens/user/user_home_screen.dart';
 import 'screens/admin/admin_dashboard_screen.dart';
+import 'screens/admin/admin_login_screen.dart';
 import 'widgets/custom_button.dart';
 import 'widgets/custom_text_field.dart';
 
@@ -33,6 +34,10 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: const AuthWrapper(),
+        routes: {
+          // '/user': (_) => const UserHomeScreen(),
+          '/admin': (context) => AdminLoginScreen(),
+        },
       ),
     );
   }
